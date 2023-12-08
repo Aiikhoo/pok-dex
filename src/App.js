@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import { LanguagesProvider } from "./contextes/LanguagesContext";
 import {PokemonProvider} from "./contextes/PokemonsContext";
 import {TypeProvider} from "./contextes/TypesContext";
+import {ModalProvider} from "./contextes/ModalContext";
 
 
 
