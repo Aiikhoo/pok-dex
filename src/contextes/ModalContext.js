@@ -1,7 +1,6 @@
-import { list } from "postcss";
 import React, { useMemo, useState } from "react";
 
-export const ModalProvider = React.createContext(undefined);
+export const ModalContext = React.createContext(undefined);
 export function ModalProvider({children}) {
     const [pokemons, setPokemons] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
