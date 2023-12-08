@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useMemo, useState} from "react";
-import {LanguageContext} from "./LanguagesContext";
+import {LanguagesContext} from "./LanguagesContext";
 
 export const PokemonContext = React.createContext(undefined);
 
@@ -13,7 +13,7 @@ export function PokemonProvider({children}) {
     const [type, setType] = useState("");
     const [order, setOrder] = useState("");
 
-    const { language } = useContext(LanguageContext);
+    const { language } = useContext(LanguagesContext);
 
     useEffect(() => {
         fetch("https://pokedex-api.3rgo.tech/api/pokemon")
