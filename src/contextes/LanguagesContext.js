@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 export const LanguagesContext = React.createContext(undefined);
 export function LanguagesProvider({children}) {
