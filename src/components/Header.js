@@ -1,14 +1,14 @@
 import logo from "../logo.png";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { PokemonContext } from "../contextes/PokemonsContext";
 import React, {useContext, useState} from "react";
-import {LanguageContext} from "../contextes/LanguagesContext";
+import { LanguagesContext } from "../contextes/LanguagesContext";
 
 export default function Header() {
 
     const { setSearch } = useContext(PokemonContext);
 
-    const { setLanguage } = useContext(LanguageContext);
+    const { setLanguage } = useContext(LanguagesContext);
 
     const [searchInput, setSearchInput] = useState("");
     const [languageInput, setLanguageInput] = useState("fr");
