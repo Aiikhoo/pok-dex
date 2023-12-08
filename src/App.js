@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
+import { LanguagesProvider } from "./contextes/LanguagesContext"; 
 
 
 
@@ -9,7 +10,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" exact element={
-          <LanguageProvider>
+          <LanguagesProvider>
             <PokemonProvider>
               <TypeProvider>
                 <ModalProvider>
@@ -18,7 +19,7 @@ function App() {
                 </ModalProvider>
               </TypeProvider>
             </PokemonProvider>
-        </LanguageProvider>
+        </LanguagesProvider>
         } />
       </Routes>
     </>
