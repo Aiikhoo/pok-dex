@@ -4,6 +4,12 @@ import {ModalContext} from "../contextes/ModalContext";
 import {TypeContext} from "../contextes/TypesContext";
 import {PokemonContext} from "../contextes/PokemonsContext";
 import {useTranslation} from "react-i18next";
+import atk from "../images/atk.png";
+import atk_spe from "../images/atk_spe.png";
+import def from "../images/def.png";
+import def_spe from "../images/def_spe.png";
+import hp from "../images/hp.png";
+import speed from "../images/speed.png";
 
 export default function Modal() {
     const { isOpen, closeModal, openModal, pokemonsModal, setPokemons } = useContext(ModalContext);
@@ -94,12 +100,30 @@ export default function Modal() {
                                         </div>
                                     </div>
                                     <div className={"flex flex-col gap-2 items-center"}>
-                                        <p className="text-sm lg:text-xl text-gray-500">{t("attaque")}: {pokemonsModal.stats?.atk}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">{t("defense")}: {pokemonsModal.stats?.def}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">{t("pdv")}: {pokemonsModal.stats?.hp}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">{t("attaque_spe")}: {pokemonsModal.stats?.spe_atk}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">{t("defense_spe")}: {pokemonsModal.stats?.spe_def}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">{t("vitesse")}: {pokemonsModal.stats?.vit}</p>
+                                        <div className={"flex flex-row gap-2 items-center"}>
+                                            <img className={"w-5 lg:w-8"} src={atk} alt={"atk"}/>
+                                            <p className="text-sm lg:text-xl text-gray-500">{pokemonsModal.stats?.atk}</p>
+                                        </div>
+                                        <div className={"flex flex-row gap-2 items-center"}>
+                                            <img className={"w-5 lg:w-8"} src={def} alt={"def"}/>
+                                            <p className="text-sm lg:text-xl text-gray-500">{pokemonsModal.stats?.def}</p>
+                                        </div>
+                                        <div className={"flex flex-row gap-2 items-center"}>
+                                            <img className={"w-5 lg:w-8"} src={hp} alt={"HP"}/>
+                                            <p className="text-sm lg:text-xl text-gray-500">{pokemonsModal.stats?.hp}</p>
+                                        </div>
+                                        <div className={"flex flex-row gap-2 items-center"}>
+                                            <img className={"w-5 lg:w-8"} src={atk_spe} alt={"atk_spe"}/>
+                                            <p className="text-sm lg:text-xl text-gray-500">{pokemonsModal.stats?.spe_atk}</p>
+                                        </div>
+                                        <div className={"flex flex-row gap-2 items-center"}>
+                                            <img className={"w-5 lg:w-8"} src={def_spe} alt={"def_spe"}/>
+                                            <p className="text-sm lg:text-xl text-gray-500">{pokemonsModal.stats?.spe_def}</p>
+                                        </div>
+                                        <div className={"flex flex-row gap-2 items-center"}>
+                                            <img className={"w-5 lg:w-8"} src={speed} alt={"vit"}/>
+                                            <p className="text-sm lg:text-xl text-gray-500">{pokemonsModal.stats?.vit}</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className={"flex flex-col flex-wrap justify-center items-center"}>

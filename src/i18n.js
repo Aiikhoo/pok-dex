@@ -20,13 +20,7 @@ const resources = {
             "order_taille_decroissant": "Size Descending",
             "search_placeholder": "Type to search",
             "language_fr": "French",
-            "language_en": "English",
-            "attaque": "Attack",
-            "defense": "Defense",
-            "pdv": "Life points",
-            "attaque_spe": "Special attack",
-            "defense_spe": "Special defense",
-            "vitesse": "Speed"
+            "language_en": "English"
         }
     },
     fr: {
@@ -44,13 +38,7 @@ const resources = {
             "order_taille_decroissant": "Taille Décroissant",
             "search_placeholder": "Tapez pour rechercher",
             "language_fr": "Français",
-            "language_en": "Anglais",
-            "attaque": "Attaque",
-            "defense": "Défense",
-            "pdv": "Points de vie",
-            "attaque_spe": "Attaque spé",
-            "defense_spe": "Défense spé",
-            "vitesse": "Vitesse"
+            "language_en": "Anglais"
         }
     }
 };
