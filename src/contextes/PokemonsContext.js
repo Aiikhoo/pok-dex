@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useMemo, useState} from "react";
-import {LanguagesContext} from "./LanguagesContext";
+import {useTranslation} from "react-i18next";
 
 export const PokemonContext = React.createContext(undefined);
 
@@ -13,7 +13,7 @@ export function PokemonProvider({children}) {
     const [type, setType] = useState("");
     const [order, setOrder] = useState("");
 
-    const { language } = useContext(LanguagesContext);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         fetch("https://pokedex-api.3rgo.tech/api/pokemon")
@@ -48,7 +48,7 @@ export function PokemonProvider({children}) {
 
         if (search) {
             filtered = pokemons.filter((pokemon) =>
-                pokemon.name[language].toLowerCase().includes(search.toLowerCase())
+                pokemon.name[i18n.language].toLowerCase().includes(search.toLowerCase())
             );
         }
 
@@ -68,10 +68,10 @@ export function PokemonProvider({children}) {
                 filtered = filtered.sort((a, b) => b.id - a.id);
                 break;
             case "3":
-                filtered = filtered.sort((a, b) => a.name[language].toLowerCase().localeCompare(b.name[language].toLowerCase()));
+                filtered = filtered.sort((a, b) => a.name[i18n.language].toLowerCase().localeCompare(b.name[i18n.language].toLowerCase()));
                 break;
             case "4":
-                filtered = filtered.sort((a, b) => b.name[language].toLowerCase().localeCompare(a.name[language].toLowerCase()));
+                filtered = filtered.sort((a, b) => b.name[i18n.language].toLowerCase().localeCompare(a.name[i18n.language].toLowerCase()));
                 break;
             case "5":
                 filtered = filtered.sort((a, b) => a.weight - b.weight);
@@ -90,9 +90,10 @@ export function PokemonProvider({children}) {
         }
 
         return filtered;
-    }, [pokemons, search, generation, type, order, language]);
+    }, [pokemons, search, generation, type, order, i18n.language]);
 
     const value = useMemo(() => ({
+        'pokemonsFullList' : pokemons,
         'pokemonsList' : filteredPokemons,
         'pokemonsGeneration' : generations,
         'loadingPokemon' : loading,

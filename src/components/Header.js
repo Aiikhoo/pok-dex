@@ -2,16 +2,15 @@ import logo from "../logo.png";
 import { NavLink } from "react-router-dom";
 import { PokemonContext } from "../contextes/PokemonsContext";
 import React, {useContext, useState} from "react";
-import { LanguagesContext } from "../contextes/LanguagesContext";
+import {useTranslation} from "react-i18next";
+
 
 export default function Header() {
-
     const { setSearch } = useContext(PokemonContext);
-
-    const { setLanguage } = useContext(LanguagesContext);
-
     const [searchInput, setSearchInput] = useState("");
-    const [languageInput, setLanguageInput] = useState("fr");
+
+    const { t, i18n } = useTranslation();
+
 
     const handleSearch = (e) => {
         const searchTerm = e.target.value;
@@ -21,8 +20,7 @@ export default function Header() {
 
     const handleLanguage = (e) => {
         const language = e.target.value;
-        setLanguage(language);
-        setLanguageInput(language);
+        i18n.changeLanguage(language)
     }
 
     return (
@@ -40,21 +38,21 @@ export default function Header() {
                         name={"Search"}
                         id={"Search"}
                         className={"w-full rounded-2xl p-1 text-xs text-center"}
-                        placeholder={"Tapez pour rechercher"}
+                        placeholder={t("search_placeholder")}
                         value={searchInput}
                         onChange={handleSearch}
                     />
                 </div>
                 <div className="w-full col-span-3 flex justify-end pr-1">
-                    <label htmlFor={"language"} className={"sr-only"}>Rechercher</label>
+                    <label htmlFor={"language"} className={"sr-only"}>Language</label>
                     <select
                         onChange={handleLanguage}
-                        value={languageInput}
+                        value={i18n.language}
                         name={"language"}
                         id={"language"}
                         className={"h-full rounded-md border-0 bg-white py-1 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
-                        <option value={"fr"}>Français</option>
-                        <option value={"en"}>Anglais</option>
+                        <option value={"fr"}>{t("language_fr")}</option>
+                        <option value={"en"}>{t("language_en")}</option>
                     </select>
                 </div>
             </nav>

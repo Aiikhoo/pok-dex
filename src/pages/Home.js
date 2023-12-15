@@ -3,18 +3,19 @@ import Modal from "../components/Modal";
 import { PokemonContext } from "../contextes/PokemonsContext";
 import Card from "../components/Card";
 import { TypeContext } from "../contextes/TypesContext";
-import { LanguagesContext } from "../contextes/LanguagesContext";
+import {useTranslation} from "react-i18next";
 
 
 export default function Home() {
     const  { setOrder, setType, pokemonsGeneration, pokemonsList, loadingPokemon, errorPokemon, setGeneration } = useContext(PokemonContext)
     const  { typesList, loadingTypes, errorTypes } = useContext(TypeContext);
-    const  {language} = useContext(LanguagesContext);
 
 
     const [searchGeneration, setSearchGeneration] = useState("");
     const [searchType, setSearchType] = useState("");
     const [searchOrder, setSearchOrder] = useState("");
+
+    const { t, i18n } = useTranslation();
 
     const handleGeneration = (e) => {
         const generation = e.target.value;
@@ -64,9 +65,9 @@ export default function Home() {
                         onChange={handleGeneration}
                         value={searchGeneration}
                         className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
-                        <option value="">Sélectionner une génération</option>
+                        <option value="">{t("select_gen")}</option>
                         {pokemonsGeneration.map(generation => (
-                            <option key={"generation-" + generation} value={generation}>Génération {generation}</option>
+                            <option key={"generation-" + generation} value={generation}>{t("gen")} {generation}</option>
                         ))}
                     </select>
                 </div>
@@ -79,9 +80,9 @@ export default function Home() {
                         onChange={handleType}
                         value={searchType}
                         className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
-                        <option value="">Sélectionner un type</option>
+                        <option value="">{t("select_type")}</option>
                         {typesList.map(type => (
-                            <option key={"type-" + type.id} value={type.id}>Type {type.name[language]}</option>
+                            <option key={"type-" + type.id} value={type.id}>Type: {type.name[i18n.language]}</option>
                         ))}
                     </select>
                 </div>
@@ -94,14 +95,14 @@ export default function Home() {
                         onChange={handleOrder}
                         value={searchOrder}
                         className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
-                        <option value="1">Numéro Croissant</option>
-                        <option value="2">Numéro Décroissant</option>
-                        <option value="3">Alphabétique Croissant</option>
-                        <option value="4">Alphabétique Décroissant</option>
-                        <option value="5">Poids Croissant</option>
-                        <option value="6">Poids Décroissant</option>
-                        <option value="7">Taille Croissant</option>
-                        <option value="8">Taille Décroissant</option>
+                        <option value="1">{t("order_num_croissant")}</option>
+                        <option value="2">{t("order_num_decroissant")}</option>
+                        <option value="3">{t("order_alpha_croissant")}</option>
+                        <option value="4">{t("order_alpha_decroissant")}</option>
+                        <option value="5">{t("order_poids_croissant")}</option>
+                        <option value="6">{t("order_poids_decroissant")}</option>
+                        <option value="7">{t("order_taille_croissant")}</option>
+                        <option value="8">{t("order_taille_decroissant")}</option>
                     </select>
                 </div>
             </div>

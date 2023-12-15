@@ -2,14 +2,15 @@ import React, {Fragment, useContext} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {ModalContext} from "../contextes/ModalContext";
 import {TypeContext} from "../contextes/TypesContext";
-import {LanguagesContext} from "../contextes/LanguagesContext";
 import {PokemonContext} from "../contextes/PokemonsContext";
+import {useTranslation} from "react-i18next";
 
 export default function Modal() {
-    const { language } = useContext(LanguagesContext);
     const { isOpen, closeModal, openModal, pokemonsModal, setPokemons } = useContext(ModalContext);
     const { pokemonsFullList } = useContext(PokemonContext);
     const { typesList } = useContext(TypeContext);
+
+    const { t, i18n } = useTranslation();
 
 
     const handleChangeModal = (pokemon) => {
@@ -20,7 +21,7 @@ export default function Modal() {
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeModal}>
+            <Dialog as="div" className="relative z-20" onClose={closeModal}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out"
@@ -55,7 +56,7 @@ export default function Modal() {
                                 </div>
                                 <Dialog.Title as="div" className="grid grid-cols-3 items-center">
                                     <p className="text-sm lg:text-xl text-center">N°{String(pokemonsModal.id).padStart(4, '0')}</p>
-                                    <p className={"text-xl lg:text-4xl text-center"}>{pokemonsModal.name?.[language]}</p>
+                                    <p className={"text-xl lg:text-4xl text-center"}>{pokemonsModal.name?.[i18n.language]}</p>
                                     <p className={"text-sm lg:text-xl text-center"}>Gen {pokemonsModal.generation}</p>
                                 </Dialog.Title>
                                 <div className={"grid grid-cols-3 items-center"}>
@@ -63,14 +64,14 @@ export default function Modal() {
                                         {
                                             pokemonsModal.types && typesList.filter(type => pokemonsModal.types.includes(type.id))
                                                 .map(type => (
-                                                    <img key={"ModalType-" + type.name[language]} src={type.image} alt={type.name[language]}
+                                                    <img key={"ModalType-" + type.name[i18n.language]} src={type.image} alt={type.name[i18n.language]}
                                                          className={"overflow-hidden h-7 w-7 lg:h-10 lg:w-10 rounded-full"}/>
                                                 ))
                                         }
                                     </div>
                                     <div className="flex flex-col overflow-hidden bg-clip-border group">
-                                        <img src={pokemonsModal.image ? pokemonsModal.image : ''} alt={pokemonsModal.name ? pokemonsModal.name[language] : ''} className={"block group-hover:hidden"}/>
-                                        <img src={pokemonsModal.image_shiny ? pokemonsModal.image_shiny : ''} alt={pokemonsModal.name ? pokemonsModal.name[language] : ''} className={"hidden group-hover:block"}/>
+                                        <img src={pokemonsModal.image ? pokemonsModal.image : ''} alt={pokemonsModal.name ? pokemonsModal.name[i18n.language] : ''} className={"block group-hover:hidden"}/>
+                                        <img src={pokemonsModal.image_shiny ? pokemonsModal.image_shiny : ''} alt={pokemonsModal.name ? pokemonsModal.name[i18n.language] : ''} className={"hidden group-hover:block"}/>
                                         <div className={"flex flex-row gap-2 justify-center"}>
                                             <div className={"flex flex-row gap-1 items-center"}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16"
@@ -93,12 +94,12 @@ export default function Modal() {
                                         </div>
                                     </div>
                                     <div className={"flex flex-col gap-2 items-center"}>
-                                        <p className="text-sm lg:text-xl text-gray-500">Attaque: {pokemonsModal.stats?.atk}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">Défense: {pokemonsModal.stats?.def}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">Points de vie: {pokemonsModal.stats?.hp}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">Attaque spé: {pokemonsModal.stats?.spe_atk}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">Défense spé: {pokemonsModal.stats?.spe_def}</p>
-                                        <p className="text-sm lg:text-xl text-gray-500">Vitesse: {pokemonsModal.stats?.vit}</p>
+                                        <p className="text-sm lg:text-xl text-gray-500">{t("attaque")}: {pokemonsModal.stats?.atk}</p>
+                                        <p className="text-sm lg:text-xl text-gray-500">{t("defense")}: {pokemonsModal.stats?.def}</p>
+                                        <p className="text-sm lg:text-xl text-gray-500">{t("pdv")}: {pokemonsModal.stats?.hp}</p>
+                                        <p className="text-sm lg:text-xl text-gray-500">{t("attaque_spe")}: {pokemonsModal.stats?.spe_atk}</p>
+                                        <p className="text-sm lg:text-xl text-gray-500">{t("defense_spe")}: {pokemonsModal.stats?.spe_def}</p>
+                                        <p className="text-sm lg:text-xl text-gray-500">{t("vitesse")}: {pokemonsModal.stats?.vit}</p>
                                     </div>
                                 </div>
                                 <div className={"flex flex-col flex-wrap justify-center items-center"}>
@@ -115,11 +116,11 @@ export default function Modal() {
                                                         className={"group"}>
                                                         <img
                                                             src={pokemonsFullList.find(x => x.id === parseInt(key)).image}
-                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[language]}
+                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[i18n.language]}
                                                             className={"block group-hover:hidden w-16 lg:w-32 border border-black rounded-full"}/>
                                                         <img
                                                             src={pokemonsFullList.find(x => x.id === parseInt(key)).image_shiny}
-                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[language]}
+                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[i18n.language]}
                                                             className={"hidden group-hover:block w-16 lg:w-32 border border-black rounded-full"}/>
                                                     </button>
                                                     <div className={"flex flex-col items-center"}>
@@ -140,11 +141,11 @@ export default function Modal() {
                                                         className={"overflow-hidden bg-clip-border group mt-2"}>
                                                         <img
                                                             src={pokemonsModal.image ? pokemonsModal.image : ''}
-                                                            alt={pokemonsModal.name ? pokemonsModal.name[language] : ''}
+                                                            alt={pokemonsModal.name ? pokemonsModal.name[i18n.language] : ''}
                                                             className={"block group-hover:hidden w-16 lg:w-32 border border-black rounded-full"}/>
                                                         <img
                                                             src={pokemonsModal.image_shiny ? pokemonsModal.image_shiny : ''}
-                                                            alt={pokemonsModal.name ? pokemonsModal.name[language] : ''}
+                                                            alt={pokemonsModal.name ? pokemonsModal.name[i18n.language] : ''}
                                                             className={"hidden group-hover:block w-16 lg:w-32 border border-black rounded-full"}/>
                                                     </div>
                                                 </div>
@@ -163,11 +164,11 @@ export default function Modal() {
                                                         className={"group"}>
                                                         <img
                                                             src={pokemonsModal.image ? pokemonsModal.image : ''}
-                                                            alt={pokemonsModal.name ? pokemonsModal.name[language] : ''}
+                                                            alt={pokemonsModal.name ? pokemonsModal.name[i18n.language] : ''}
                                                             className={"block group-hover:hidden w-16 lg:w-32 border border-black rounded-full"}/>
                                                         <img
                                                             src={pokemonsModal.image_shiny ? pokemonsModal.image_shiny : ''}
-                                                            alt={pokemonsModal.name ? pokemonsModal.name[language] : ''}
+                                                            alt={pokemonsModal.name ? pokemonsModal.name[i18n.language] : ''}
                                                             className={"hidden group-hover:block w-16 lg:w-32 border border-black rounded-full"}/>
                                                     </div>
                                                     <div className={"flex flex-col items-center"}>
@@ -189,11 +190,11 @@ export default function Modal() {
                                                         onClick={() => handleChangeModal(pokemonsFullList.find(x => x.id === parseInt(key)))}>
                                                         <img
                                                             src={pokemonsFullList.find(x => x.id === parseInt(key)).image}
-                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[language]}
+                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[i18n.language]}
                                                             className={"block group-hover:hidden w-16 lg:w-32 border border-black rounded-full"}/>
                                                         <img
                                                             src={pokemonsFullList.find(x => x.id === parseInt(key)).image_shiny}
-                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[language]}
+                                                            alt={pokemonsFullList.find(x => x.id === parseInt(key)).name[i18n.language]}
                                                             className={"hidden group-hover:block w-16 lg:w-32 border border-black rounded-full"}/>
                                                     </button>
                                                 </div>

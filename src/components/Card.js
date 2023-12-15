@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {TypeContext} from "../contextes/TypesContext";
-import {LanguagesContext} from "../contextes/LanguagesContext";
 import {ModalContext} from "../contextes/ModalContext";
+import {useTranslation} from "react-i18next";
 
 export default function Card(props) {
     const { pokemon } = props;
@@ -11,7 +11,7 @@ export default function Card(props) {
 
     const formattedId = String(pokemon['id']).padStart(4, '0');
 
-    const { language } = useContext(LanguagesContext);
+    const { t, i18n } = useTranslation();
 
     const handleInfo = () => {
         openModal();
@@ -32,23 +32,23 @@ export default function Card(props) {
             </div>
             <div>
                 <p className="mt-2 text-center font-semibold leading-snug tracking-normal">
-                    {pokemon.name[language]}
+                    {pokemon.name[i18n.language]}
                 </p>
             </div>
             <div className="relative overflow-hidden text-gray-700 rounded-xl bg-clip-border group">
-                <img src={pokemon.image} alt={pokemon.name[language]} className={"block group-hover:hidden"} />
-                <img src={pokemon.image_shiny} alt={pokemon.name[language]} className={"hidden group-hover:block"} />
+                <img src={pokemon.image} alt={pokemon.name[i18n.language]} className={"block group-hover:hidden"} />
+                <img src={pokemon.image_shiny} alt={pokemon.name[i18n.language]} className={"hidden group-hover:block"} />
             </div>
             <div className="text-center">
                 <p className="mt-2 text-center font-semibold leading-snug tracking-normal">
-                    Generation {pokemon.generation}
+                    {t("gen")} {pokemon.generation}
                 </p>
             </div>
             <div className="flex justify-center my-2 gap-2">
                 {
                     typesList.filter(type => pokemon.types.includes(type.id))
                         .map(type => (
-                            <img src={type.image} alt={type.name[language]} className={"overflow-hidden h-5 w-5 md:h-7 md:w-7 lg:h-10 lg:w-10 rounded-full"}/>
+                            <img src={type.image} alt={type.name[i18n.language]} className={"overflow-hidden h-5 w-5 md:h-7 md:w-7 lg:h-10 lg:w-10 rounded-full"}/>
                         ))
                 }
             </div>
