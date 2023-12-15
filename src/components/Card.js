@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {TypeContext} from "../contextes/TypesContext";
-import {LanguageContext} from "../contextes/LanguagesContext";
-import {ModalContext} from "../contextes/ModalsContext";
+import {LanguagesContext} from "../contextes/LanguagesContext";
+import {ModalContext} from "../contextes/ModalContext";
 
 export default function Card(props) {
     const { pokemon } = props;
@@ -11,7 +11,7 @@ export default function Card(props) {
 
     const formattedId = String(pokemon['id']).padStart(4, '0');
 
-    const { language } = useContext(LanguageContext);
+    const { language } = useContext(LanguagesContext);
 
     const handleInfo = () => {
         openModal();
