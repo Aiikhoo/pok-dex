@@ -3,11 +3,14 @@ import Modal from "../components/Modal";
 import { PokemonContext } from "../contextes/PokemonsContext";
 import Card from "../components/Card";
 import { TypeContext } from "../contextes/TypesContext";
-import { type } from "@testing-library/user-event/dist/type";
+import { LanguagesContext } from "../contextes/LanguagesContext";
+
 
 export default function Home() {
     const  { setOrder, setType, pokemonsGeneration, pokemonsList, loadingPokemon, errorPokemon, setGeneration } = useContext(PokemonContext)
     const  { typesList, loadingTypes, errorTypes } = useContext(TypeContext);
+    const  {language} = useContext(LanguagesContext);
+
 
     const [searchGeneration, setSearchGeneration] = useState("");
     const [searchType, setSearchType] = useState("");
@@ -78,7 +81,7 @@ export default function Home() {
                         className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
                         <option value="">Sélectionner un type</option>
                         {typesList.map(type => (
-                            <option key={"type-" + type.id} value={type.id}>Type {type.name["fr"]}</option>
+                            <option key={"type-" + type.id} value={type.id}>Type {type.name[language]}</option>
                         ))}
                     </select>
                 </div>
