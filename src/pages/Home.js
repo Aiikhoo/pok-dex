@@ -1,59 +1,96 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Modal from "../components/Modal";
 import { PokemonContext } from "../contextes/PokemonsContext";
 import Card from "../components/Card";
+import { TypeContext } from "../contextes/TypesContext";
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function Home() {
-    const  { pokemonsList } = useContext(PokemonContext)
+    const  { setOrder, setType, pokemonsGeneration, pokemonsList, loadingPokemon, errorPokemon, setGeneration } = useContext(PokemonContext)
+    const  { typesList, loadingTypes, errorTypes } = useContext(TypeContext);
+
+    const [searchGeneration, setSearchGeneration] = useState("");
+    const [searchType, setSearchType] = useState("");
+    const [searchOrder, setSearchOrder] = useState("");
+
+    const handleGeneration = (e) => {
+        const generation = e.target.value;
+        setSearchGeneration(generation);
+        setGeneration(generation);
+    }
+
+    const handleType = (e) => {
+        const type = e.target.value;
+        setSearchType(type);
+        setType(type);
+    }
+
+    const handleOrder = (e) => {
+        const order = e.target.value;
+        setSearchOrder(order);
+        setOrder(order);
+    }
+    let errorMessage = null;
+    if (errorPokemon) {
+        errorMessage = `There is a problem fetching the post data - ${errorPokemon}`;
+    } else if (errorTypes) {
+        errorMessage = `There is a problem fetching the post data - ${errorTypes}`;
+    }
+
+    if (errorMessage) {
+        return (
+            <div>{errorMessage}</div>
+        );
+    }
+
+    if (loadingPokemon || loadingTypes) {
+        return (
+            <div>A moment please ...</div>
+        );
+    }
+
     return (
         <div className={"mt-20"}>
             <div className={"flex flex-row gap-2 flex-wrap justify-between px-2"}>
                 <div>
                     <label htmlFor="gen" className="sr-only">Génération</label>
 
-                    <select name="gen" id="gen">
+                    <select
+                        name="gen"
+                        id="gen"
+                        onChange={handleGeneration}
+                        value={searchGeneration}
+                        className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
                         <option value="">Sélectionner une génération</option>
-                        <option value="1">Génération 1</option>
-                        <option value="2">Génération 2</option>
-                        <option value="3">Génération 3</option>
-                        <option value="4">Génération 4</option>
-                        <option value="5">Génération 5</option>
-                        <option value="6">Génération 6</option>
-                        <option value="7">Génération 7</option>
-                        <option value="8">Génération 8</option>
-                        <option value="9">Génération 9</option>
+                        {pokemonsGeneration.map(generation => (
+                            <option key={"generation-" + generation} value={generation}>Génération {generation}</option>
+                        ))}
                     </select>
                 </div>
                 <div>
                     <label htmlFor="type" className="sr-only">Génération</label>
 
-                    <select name="type" id="type">
+                    <select
+                        name="type"
+                        id="type"
+                        onChange={handleType}
+                        value={searchType}
+                        className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
                         <option value="">Sélectionner un type</option>
-                        <option value="1">Type Acier</option>
-                        <option value="2">Type Combat</option>
-                        <option value="3">Type Dragon</option>
-                        <option value="4">Type Eau</option>
-                        <option value="5">Type Electrik</option>
-                        <option value="6">Type Fée</option>
-                        <option value="7">Type Feu</option>
-                        <option value="8">Type Glace</option>
-                        <option value="9">Type Insecte</option>
-                        <option value="10">Type Normal</option>
-                        <option value="11">Type Plante</option>
-                        <option value="12">Type Poison</option>
-                        <option value="13">Type Psy</option>
-                        <option value="14">Type Roche</option>
-                        <option value="15">Type Sol</option>
-                        <option value="16">Type Spectre</option>
-                        <option value="17">Type Ténébres</option>
-                        <option value="18">Type Vol</option>
+                        {typesList.map(type => (
+                            <option key={"type-" + type.id} value={type.id}>Type {type.name["fr"]}</option>
+                        ))}
                     </select>
                 </div>
                 <div>
                     <label htmlFor="order" className="sr-only">Génération</label>
 
-                    <select name="order" id="order">
-                        <option value="">Numéro Croissant</option>
+                    <select
+                        name="order"
+                        id="order"
+                        onChange={handleOrder}
+                        value={searchOrder}
+                        className={"h-full rounded-md border-0 bg-white py-0 px-2 text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs"}>
                         <option value="1">Numéro Croissant</option>
                         <option value="2">Numéro Décroissant</option>
                         <option value="3">Alphabétique Croissant</option>
